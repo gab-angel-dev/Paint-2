@@ -1,6 +1,5 @@
 from poo.poligonos.Figuras import Figuras
 
-
 class LinhaLivre(Figuras):
     def __init__(
         self,
@@ -21,23 +20,28 @@ class LinhaLivre(Figuras):
             cor_borda,
             cor_preenchimento
             )
+        self.pontos =[(x1,y2)]
 
 
-    def iniciar_figura(self):
-        return super().iniciar_figura()
+    def iniciar_figura(self,x,y):
+        self.pontos.append((x,y))
+        
 
 
-    def atualizar_figura(self):
-        return super().atualizar_figura()
+    def atualizar_figura(self,canvas,traco = False):
+        if len(self.pontos) > 1:
+            dash_param = (4, 2) if traco else None
+            canvas.create_line(self.pontos, fill=self.cor_borda, dash=dash_param)
+        
     
     def incluir_figura(self):
-        return super().incluir_figura()
+        pass
     
     def desenhar_figura(self):
-        return super().desenhar_figura()
+        pass
     
     def desenhar_figura_nova(self):
-        return super().desenhar_figura_nova()
+        pass
     
     def incompleta(self):
-        return super().incompleta()
+        return len(self.pontos) <=1
