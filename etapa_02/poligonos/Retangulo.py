@@ -23,21 +23,37 @@ class Retangulo(Figuras):
             )
 
 
-    def iniciar_figura(self):
-        return super().iniciar_figura()
+    def iniciar_figura(self,mouse_x,mouse_y):
+        self.x1 = mouse_x
+        self.y1 = mouse_y
+        self.x2 = mouse_x
+        self.y2 = mouse_y
 
 
-    def atualizar_figura(self):
-        return super().atualizar_figura()
+    def atualizar_figura(self, mouse_x, mouse_y):
+        self.x2 = mouse_x
+        self.y2 = mouse_y
+        
     
     def incluir_figura(self):
-        return super().incluir_figura()
+        pass
     
-    def desenhar_figura(self):
-        return super().desenhar_figura()
+    def desenhar_figura(self,canvas,traco=False):
+        # Define se a linha do contorno será traco ou contínua
+        dash_para = (4,2) if traco else None
+        canvas.create_rectangle(
+            self.x1,
+            self.y1, 
+            self.x2, 
+            self.y2,
+            outline=self.cor_borda, 
+            fill=self.cor_preenchimento, 
+            dash=dash_para
+            )
+        
     
     def desenhar_figura_nova(self):
-        return super().desenhar_figura_nova()
+        pass
     
     def incompleta(self):
-        return super().incompleta()
+        return ((self.x1, self.y1) == (self.x2, self.y2))

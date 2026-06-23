@@ -21,23 +21,33 @@ class Oval(Figuras):
             cor_borda,
             cor_preenchimento
             )
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
 
-
-    def iniciar_figura(self):
-        return super().iniciar_figura()
-
+    def iniciar_figura(self,x,y):
+        self.x2 = x1
+        self.y2 = y1
 
     def atualizar_figura(self):
-        return super().atualizar_figura()
-    
+        self.x2 = x 
+        self.y2 = y
+
     def incluir_figura(self):
-        return super().incluir_figura()
+        pass
     
-    def desenhar_figura(self):
-        return super().desenhar_figura()
+    def desenhar_figura(self,canvas,traco=False):
+        dash_para = (4,2) if traco else None
+
+        canvas.create_oval(self.x1, self.y1, self.x2, self.y2,
+            outline=self.cor_borda, 
+            fill=self.cor_preenchimento, 
+            dash=dash_para 
+            )
     
     def desenhar_figura_nova(self):
-        return super().desenhar_figura_nova()
+        pass
     
     def incompleta(self):
-        return super().incompleta()
+        return ((self.x1 == self.x2 and self.y1 == self.y2))
