@@ -54,6 +54,7 @@ def incluir_figura_nova(event):
         figuras.append(figura_nova) 
     desenhar_figuras()
 
+# Cria as figuras 
 def desenhar_figuras():
     canvas.delete("all")
     for fig, values, cor_outline, cor_fill in figuras:
@@ -98,6 +99,7 @@ def incompleta(figura):
     elif fig == "rabisco":
         return len(values) <= 1
 
+# cores
 def get_color(cor):
     if cor.get() == 'Preto':
         return 'black'
@@ -189,4 +191,3 @@ canvas.bind('<B1-Motion>', atualizar_figura_nova)
 canvas.bind('<ButtonRelease-1>', incluir_figura_nova)
 
 root.mainloop()
-
