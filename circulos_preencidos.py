@@ -24,30 +24,43 @@ def incluir_circulo(event):
 def desenhar():
     canvas.delete("all")
     for circulo in circulos:
-        (x,y,r) , cor = circulo
+        x,y,r,cor = circulo
         canvas.create_oval(x-r, y-r, x+r,y+r,outline = "black",fill= cor,width = 3)
 
 
-def preencher_figuras(nova_cor):
+def muda_cor(nova_cor):
     global cor_atual
     cor_atual = nova_cor
 
 
 circulos = []
 raio = 0
+ini_x = 0
+ini_y = 0
 cor_atual = "blue"
 
+
 root = Tk()
-root.title("Circulos")
+root.title("Circulos_coloridos")
 
 canvas = Canvas(root, bg='white', width=600, height=600)
 canvas.pack()
 
 
-ini_x = None
-ini_y = None
-fim_x = None
-fim_y = None
+frame_botao = Frame(root)
+frame_botao.pack(fill= "x",pady=5)
+
+botao_azul = Button(frame_botao,text="Azul",command= lambda: muda_cor("blue"))
+botao_azul.pack(side=LEFT, expand=True, fill="x", padx=5)
+
+botao_amarelo = Button(frame_botao,text="Amarelo",command= lambda: muda_cor("yellow"))
+botao_amarelo.pack(side=LEFT, expand= True, fill="x",padx=5)
+
+botao_vermelho = Button(frame_botao,text= "Vermelho",command= lambda: muda_cor("red"))
+botao_vermelho.pack(side=LEFT, expand = True,fill ="x",padx=5)
+
+
+
 canvas.bind('<ButtonPress-1>', inicia_linha)
 canvas.bind('<B1-Motion>', atualiza_linha)
 canvas.bind('<ButtonRelease-1>', incluir_circulo)
