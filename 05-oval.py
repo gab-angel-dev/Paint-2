@@ -57,7 +57,6 @@ def desenhar_figura_nova():
     elif fig == "oval":
         canvas.create_oval(values, dash=(4, 2))
 
-
 def incompleta(figura):
     fig, values = figura
     if fig == "linha":
@@ -102,4 +101,3 @@ canvas.bind('<B1-Motion>', atualizar_figura_nova)
 canvas.bind('<ButtonRelease-1>', incluir_figura_nova)
 
 root.mainloop()
-
