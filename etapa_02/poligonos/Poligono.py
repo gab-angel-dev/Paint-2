@@ -1,4 +1,4 @@
-from poo.poligonos.Figuras import Figuras
+from etapa_02.poligonos.Figuras import Figuras
 import math
 
 class Poligono(Figuras):
