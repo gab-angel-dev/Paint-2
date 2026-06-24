@@ -5,26 +5,28 @@ class Circulo(Figuras):
     def __init__(
         self,
         canvas,
-        historico_figuras: list[tuple],
-        nome = None,
+        historico_figuras,
         x1: int = 0,
         y1: int = 0,
         x2: int = 0,
         y2: int = 0,
+        nome = None,
         cor_borda: str = 'black',
         cor_preenchimento: str = 'white',
+        lados = 3
         ):
         super().__init__(
-            nome,
+            canvas,
+            historico_figuras,
             x1,
             y1,
             x2,
             y2,
+            nome,
             cor_borda,
-            cor_preenchimento
+            cor_preenchimento,
+            lados
             )
-        self.canvas = canvas
-        self.historico_figuras = historico_figuras
         self.raio = 0 
 
 
@@ -36,14 +38,14 @@ class Circulo(Figuras):
             self.cor_preenchimento
         )
 
-    def atualizar_figura(self, event, raio=None):
-        raio = min(
+    def atualizar_figura(self, event):
+        self.raio = min(
         abs(event.x-self.figura_nova[1][0]),
         abs(event.y-self.figura_nova[1][1])
         )
         self.figura_nova = (
             'circulo', 
-            (self.figura_nova[1][0], self.figura_nova[1][1], self.figura_nova[1][0]+raio, self.figura_nova[1][1]+raio),
+            (self.figura_nova[1][0], self.figura_nova[1][1], self.figura_nova[1][0]+self.raio, self.figura_nova[1][1]+self.raio),
             self.cor_borda,
             self.cor_preenchimento
             )
@@ -63,8 +65,14 @@ class Circulo(Figuras):
         
     
     def desenhar_figura_nova(self):
-        values = self.figura_nova[1]
-        self.canvas.create_oval(values[0], values[1], values[2], values[3], dash=(4, 2))
+        fig, values, cor_outline, cor_fill = self.figura_nova
+        self.canvas.create_oval(
+            values,
+            dash=(4, 2),
+            outline=cor_outline,
+            fill=cor_fill,
+            width=2
+            )
         
     
     def incompleta(self, event):

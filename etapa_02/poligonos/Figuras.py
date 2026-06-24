@@ -4,8 +4,7 @@ class Figuras(ABC):
     def __init__(
         self,
         canvas,
-        historico_figuras: list[tuple],
-        tipo_figura: str,
+        historico_figuras: list[tuple] = [],
         x1: int = 0, 
         y1: int = 0,
         x2: int = 0,
@@ -13,8 +12,7 @@ class Figuras(ABC):
         nome: str | None = None,
         cor_borda: str | None = 'black',
         cor_preenchimento: str | None = 'white',
-
-
+        lados: int = 3
     
     ):
         super().__init__()
@@ -27,7 +25,7 @@ class Figuras(ABC):
         self.cor_preenchimento = cor_preenchimento
         self.canvas = canvas
         self.historico_figuras = historico_figuras
-        self.tipo_figura =tipo_figura
+        self.lados = lados
 
 
     @abstractmethod
@@ -56,6 +54,8 @@ class Figuras(ABC):
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'circulo':
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
+            else:
+                self.canvas.create_polygon(values, outline=cor_outline, fill=cor_fill, dash=(4, 2), width=2)
 
 
     @abstractmethod

@@ -5,23 +5,27 @@ class Oval(Figuras):
     def __init__(
         self,
         canvas,
-        historico_figuras: list[tuple],
-        nome =None,
+        historico_figuras,
         x1=0,
         y1=0,
         x2=0,
         y2=0,
+        nome =None,
         cor_borda = 'black',
-        cor_preenchimento = 'white'
+        cor_preenchimento = 'white',
+        lados = 3
         ):
         super().__init__(
-            nome,
+            canvas,
+            historico_figuras,
             x1,
             y1,
             x2,
             y2,
+            nome,
             cor_borda,
-            cor_preenchimento
+            cor_preenchimento,
+            lados
             )
         self.canvas = canvas
         self.historico_figuras = historico_figuras
@@ -29,10 +33,7 @@ class Oval(Figuras):
     def iniciar_figura(self,event):
         self.figura_nova = (
             'oval',
-            (event.x,
-            event.y,
-            event.x,
-            event.y),
+            (event.x, event.y, event.x, event.y),
             self.cor_borda,
             self.cor_preenchimento
             )
@@ -59,11 +60,15 @@ class Oval(Figuras):
 
     
     def desenhar_figura_nova(self):
-        values = self.figura_nova[1]
+        fig, values, cor_outline, cor_fill = self.figura_nova
         self.canvas.create_oval(
             values,
             dash=(4, 2),
-        )
+            outline=cor_outline,
+            fill=cor_fill,
+            width=2
+            )
+        
     
     def incompleta(self,event):
         values = self.figura_nova[1]

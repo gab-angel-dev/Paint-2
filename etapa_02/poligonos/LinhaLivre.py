@@ -11,7 +11,8 @@ class LinhaLivre(Figuras):
         x2=0,
         y2=0,
         cor_borda = 'black',
-        cor_preenchimento = 'white'
+        cor_preenchimento = 'white',
+        lados =3 
         ):
         super().__init__(
             nome,
@@ -20,7 +21,8 @@ class LinhaLivre(Figuras):
             x2,
             y2,
             cor_borda,
-            cor_preenchimento
+            cor_preenchimento,
+            lados
             )
         self.canvas = canvas
         self.historico_figuras = historico_figuras
@@ -50,7 +52,7 @@ class LinhaLivre(Figuras):
     
     def desenhar_figura_nova(self):
         tipo, values, cor_outline, cor_fill = self.figura_nova
-        self.canvas.create_line(values, dash=(4, 2),fill=cor_outline)
+        self.canvas.create_line(values, dash=(4, 2))
     
     def incompleta(self):
         return len(self.figura_nova[1]) <=1
