@@ -3,11 +3,13 @@ from etapa_02.poligonos.Figuras import Figuras
 class LinhaLivre(Figuras):
     def __init__(
         self,
-        nome,
-        x1,
-        y1,
-        x2,
-        y2,
+        canvas,
+        historico_figuras: list[tuple],
+        nome = None,
+        x1=0,
+        y1=0,
+        x2=0,
+        y2=0,
         cor_borda = 'black',
         cor_preenchimento = 'white'
         ):
@@ -20,28 +22,33 @@ class LinhaLivre(Figuras):
             cor_borda,
             cor_preenchimento
             )
-        self.pontos =[(x1,y2)]
+        self.canvas = canvas
+        self.historico_figuras = historico_figuras
 
 
-    def iniciar_figura(self,x,y):
-        self.pontos.append((x,y))
-        
+    def iniciar_figura(self, event):
+        self.figura_nova  = (
+            "rabisco",
+            ([(event.x, event.y)]),
+            self.cor_borda,
+            self.cor_preenchimento
+        )
 
-
-    def atualizar_figura(self,canvas,traco = False):
-        if len(self.pontos) > 1:
-            dash_param = (4, 2) if traco else None
-            canvas.create_line(self.pontos, fill=self.cor_borda, dash=dash_param)
-        
+    def atualizar_figura(self, event):
+        self.figura_nova[1].append((event.x, event.y))
     
-    def incluir_figura(self):
-        pass
+    def incluir_figura(self,event):
+        if not self.incompleta(): 
+            self.historico_figuras.append(self.figura_nova)
+        self.desenhar_figura() 
+        
     
     def desenhar_figura(self):
         return super().desenhar_figura()        
     
     def desenhar_figura_nova(self):
-        pass
+        values = self.figura_nova[1]
+        canvas.create_line(values, dash=(4, 2))
     
     def incompleta(self):
-        return len(self.pontos) <=1
+        return len(self.figura_nova[1]) <=1
