@@ -5,26 +5,28 @@ class Retangulo(Figuras):
     def __init__(
         self,
         canvas,
-        historico_figuras: list[tuple],
-        nome= None,
+        historico_figuras,
         x1=0,
         y1=0,
         x2=0,
         y2=0,
+        nome= None,
         cor_borda = 'black',
-        cor_preenchimento = 'white'
+        cor_preenchimento = 'white',
+        lados = 3
         ):
         super().__init__(
-            nome,
+            canvas,
+            historico_figuras,
             x1,
             y1,
             x2,
             y2,
+            nome,
             cor_borda,
-            cor_preenchimento
+            cor_preenchimento,
+            lados
             )
-        self.canvas = canvas
-        self.historico_figuras = historico_figuras
 
     def iniciar_figura(self,event):
         self.figura_nova = (

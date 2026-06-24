@@ -16,6 +16,7 @@ class Linha(Figuras):
         y2: int = 0,
         cor_borda: str = 'black',
         cor_preenchimento: str = 'white',
+        lados = 3
         ):
         super().__init__(
             nome,
@@ -24,7 +25,8 @@ class Linha(Figuras):
             x2,
             y2,
             cor_borda,
-            cor_preenchimento
+            cor_preenchimento,
+            lados
             )
         self.canvas = canvas
         self.historico_figuras = historico_figuras

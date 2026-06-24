@@ -72,7 +72,7 @@ class App(tk.Tk):
         self.menu_figura.pack(side='left')
 
         # botao de escolher cor de borda
-        self.cor_borda = tk.StringVar(value='Cor da Borda')
+        self.cor_borda = tk.StringVar(self.barra_superior, value='Cor da Borda')
 
         self.menu_cor_borda = tk.OptionMenu(
             self.barra_superior,
@@ -83,7 +83,8 @@ class App(tk.Tk):
                 'Azul',
                 'Verde',
                 'Vermelho',
-                'Rosa'
+                'Rosa',
+                'Cinza'
         )
 
         self.menu_cor_borda.config(
@@ -99,7 +100,7 @@ class App(tk.Tk):
         self.menu_cor_borda.pack(side='left')
 
         # botao de escolher cor de preenchimento
-        self.cor_preenchimento = tk.StringVar(value='Cor Preenchimento')
+        self.cor_preenchimento = tk.StringVar(self.barra_superior, value='Cor Preenchimento')
 
         self.menu_cor_preenchimento = tk.OptionMenu(
             self.barra_superior,
@@ -110,7 +111,8 @@ class App(tk.Tk):
                 'Azul',
                 'Verde',
                 'Vermelho',
-                'Rosa'
+                'Rosa',
+                'Cinza'
         )
 
         self.menu_cor_preenchimento.config(
@@ -126,7 +128,7 @@ class App(tk.Tk):
         self.menu_cor_preenchimento.pack(side='left')
 
         # botao de ferramenta
-        self.ferramenta = tk.StringVar(value='Ferramenta')
+        self.ferramenta = tk.StringVar(self.barra_superior, value='Ferramenta')
 
         self.menu_ferramenta = tk.OptionMenu(
             self.barra_superior,
@@ -145,6 +147,26 @@ class App(tk.Tk):
         )
 
         self.menu_ferramenta.pack(side='left')
+
+
+        # botao deescolher lados do poligono
+        self.lados = tk.IntVar(self.barra_superior, value=3)
+
+        self.spinbox_lados = tk.Spinbox(
+            self.barra_superior,
+            from_=3,
+            to=20,
+            textvariable=self.lados,
+            width=3,
+            bg='gray20',
+            fg='white',
+            buttonbackground='gray20',
+            relief='flat',
+        )
+
+        self.spinbox_lados.pack(side='left')
+
+
     
 
 

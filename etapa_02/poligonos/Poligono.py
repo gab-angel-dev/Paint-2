@@ -5,53 +5,32 @@ class Poligono(Figuras):
     def __init__(
         self,
         canvas,
-        historico_figuras: list[tuple],
-        lados: int = 3,
-        nome=None,
+        historico_figuras,
         x1: int = 0,
         y1: int = 0,
         x2: int = 0,
         y2: int = 0,
+        nome=None,
         cor_borda: str = 'black',
         cor_preenchimento: str = 'white',
+        lados = 3,
     ):
         super().__init__(
+            canvas,
+            historico_figuras,
             nome,
             x1,
             y1,
             x2,
             y2,
             cor_borda,
-            cor_preenchimento)
+            cor_preenchimento,
+            lados
+            )
             
-        self.canvas = canvas
-        self.historico_figuras = historico_figuras
-        self.lados = max(3, lados)
+        
+        
 
-    def iniciar_figura(self, event):
-        self.figura_nova = (
-            "poligono",
-            (event.x, event.y, event.x, event.y),
-            self.cor_borda,
-            self.cor_preenchimento,
-            self.lados
-        )
-
-    def atualizar_figura(self, event):
-        self.figura_nova = (
-            "poligono",
-            (self.figura_nova[1][0], self.figura_nova[1][1], event.x, event.y),
-            self.cor_borda,
-            self.cor_preenchimento,
-            self.lados
-        )
-        self.desenhar_figura()
-        self.desenhar_figura_nova()
-
-    def incluir_figura(self, event):
-        if not self.incompleta(self.figura_nova):
-            self.historico_figuras.append(self.figura_nova)
-        self.desenhar_figura()
 
     def calcular_vertices(self, coords):
         x1, y1, x2, y2 = coords
@@ -68,20 +47,48 @@ class Poligono(Figuras):
             vertices.extend([x, y])
         return vertices
 
+
+    def iniciar_figura(self, event):
+        self.x_inicial = event.x
+        self.y_inicial = event.y
+
+    def atualizar_figura(self, event):
+        pontos = (self.x_inicial, self.y_inicial, event.x, event.y)
+        vertices = self.calcular_vertices(pontos)
+
+        self.figura_nova = (
+            "poligono",
+            vertices,
+            self.cor_borda,
+            self.cor_preenchimento,
+        )
+
+        self.desenhar_figura()
+        self.desenhar_figura_nova()
+
+    def incluir_figura(self, event):
+        if not self.incompleta(self.figura_nova):
+            self.historico_figuras.append(self.figura_nova)
+        self.desenhar_figura()
+
+
     def desenhar_figura(self):
         return super().desenhar_figura()
 
     def desenhar_figura_nova(self):
-        coords = self.figura_nova[1]
-        lados = self.figura_nova[4]
-        vertices = self.calcular_vertices(coords)
+        # coords = self.figura_nova[1]
+        # vertices = self.calcular_vertices(coords)
+        vertices = self.figura_nova[1]
+        cor_borda = self.figura_nova[2]
+        cor_preenchimento = self.figura_nova[3]
         self.canvas.create_polygon(
             vertices,
-            outline=self.cor_borda,
-            fill='',
-            dash=(4, 2)
+            outline=cor_borda,
+            fill=cor_preenchimento,
+            dash=(4, 2),
+            width=2
         )
 
     def incompleta(self, figura):
-        values = figura[1]
-        return (values[0], values[1]) == (values[2], values[3])
+        vertices = figura[1]
+        return vertices[0] == vertices[2] and vertices[1] == vertices[3]
