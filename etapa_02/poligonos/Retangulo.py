@@ -45,6 +45,8 @@ class Retangulo(Figuras):
             self.cor_borda, 
             self.cor_preenchimento
         )
+        self.desenhar_figura()
+        self.desenhar_figura_nova()
         
     
     def incluir_figura(self,event):
@@ -57,6 +59,7 @@ class Retangulo(Figuras):
         
     
     def desenhar_figura_nova(self):
+        fig, values, cor_outline, cor_fill = self.figura_nova
         self.canvas.create_rectangle(
             values,
             dash=(4, 2),
