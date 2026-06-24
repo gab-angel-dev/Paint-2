@@ -37,6 +37,7 @@ class App(tk.Tk):
         self.canvas.grid(row=1, column=0, sticky='nsew', padx=(100, 20), pady=1)
 
 
+
         # Funções que constroem a tela
         self.construir_barra_menu()
 
@@ -45,16 +46,17 @@ class App(tk.Tk):
 
     def construir_barra_menu(self):
         # boato de escolher figura
-        self.tipo_figura = tk.StringVar(value='Formas')
+        self.tipo_figura = tk.StringVar(self.barra_superior, value="Formas")
         
         self.menu_figura = tk.OptionMenu(
             self.barra_superior,
             self.tipo_figura,
                 "Linha",
+                "Rabisco",
                 "Retângulo",
                 "Oval",
                 "Círculo",
-                "Rabisco",
+                "Poligono"
         )
 
         self.menu_figura.config(
@@ -148,7 +150,9 @@ class App(tk.Tk):
 
 
 
-        
 
-janela = App()
-janela.mainloop()
+if __name__ == "__main__":
+
+
+    janela = App()
+    janela.mainloop()

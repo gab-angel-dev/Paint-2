@@ -1,4 +1,4 @@
-from poo.poligonos.Figuras import Figuras
+from etapa_02.poligonos.Figuras import Figuras
 #from tkinter import *
 
 #Todos os comentarios aqui são para a interface
@@ -7,14 +7,15 @@ from poo.poligonos.Figuras import Figuras
 class Linha(Figuras):
     def __init__(
         self,
-        nome,
-        x1,
-        y1,
-        x2,
-        y2,
-        # canvas,
-        cor_borda = 'black',
-        cor_preenchimento = 'white',
+        canvas,
+        historico_figuras: list[tuple],
+        nome = None,
+        x1: int = 0,
+        y1: int = 0,
+        x2: int = 0,
+        y2: int = 0,
+        cor_borda: str = 'black',
+        cor_preenchimento: str = 'white',
         ):
         super().__init__(
             nome,
@@ -25,60 +26,46 @@ class Linha(Figuras):
             cor_borda,
             cor_preenchimento
             )
-        # self.canvas = canvas
-        # self.ini_x = None
-        # self.ini_y = None
-        # self.fim_x = None
-        # self.fim_y = None
-
-        # self.canvas.bind('<ButtonPress-1>',self.iniciar_figura)
-        # self.canvas.bind('<B1-Motion>',self.atualizar_figura)
+        self.canvas = canvas
+        self.historico_figuras = historico_figuras
 
 
     def iniciar_figura(self,event):
-        self.ini_x = event.x
-        self.ini_y = event.y
-        return super().iniciar_figura()
+        self.figura_nova  = (
+            "linha",
+            (event.x, event.y, event.x, event.y),
+            self.cor_borda,
+            self.cor_preenchimento
+        )
 
-
+        
     def atualizar_figura(self,event):
-        self.fim_x = event.x
-        self.fim_y = event.y
-        self.canvas.delete("all")
-        self.canvas.create_line(self.ini_x, self.ini_y, self.fim_x, self.fim_y)
+        self.figura_nova = (
+            "linha",
+            (self.figura_nova[1][0], self.figura_nova[1][1], event.x, event.y),
+            self.cor_borda,
+            self.cor_preenchimento
+            )
+        
+        self.desenhar_figura()
+        self.desenhar_figura_nova()
 
-        return super().atualizar_figura()
-    
-    def incluir_figura(self):
-        return super().incluir_figura()
-    
     def desenhar_figura(self):
         return super().desenhar_figura()
+        
     
     def desenhar_figura_nova(self):
-        return super().desenhar_figura_nova()
+        values = self.figura_nova[1]
+        self.canvas.create_line(values[0], values[1], values[2], values[3], dash=(4, 2))
+        
+
+    def incluir_figura(self,event):
+        if not self.incompleta(self.figura_nova): 
+            self.historico_figuras.append(self.figura_nova) 
+        self.desenhar_figura()
     
-    def incompleta(self):
-        return super().incompleta()
-
-
-'''
-#******MAIN*******#       
-class AplicacaoPOO:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Desenho em POO")
+    
+    def incompleta(self, event):
+        values = self.figura_nova[1]
+        return (values[0], values[1]) == (values[2], values[3])
         
-        # Configuração do Canvas
-        self.canvas = Canvas(self.root, bg='white', width=600, height=600)
-        self.canvas.pack()
-        
-        # Instancia a lógica de desenho passando o canvas desta janela
-        self.ferramenta = Linha("Linha1", 0, 0, 0, 0, self.canvas)
-
-# ******* MAIN ******* #
-if __name__ == "__main__":
-    root = Tk()
-    app = AplicacaoPOO(root)
-    root.mainloop()
-'''

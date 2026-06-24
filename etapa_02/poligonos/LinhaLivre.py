@@ -1,4 +1,4 @@
-from poo.poligonos.Figuras import Figuras
+from etapa_02.poligonos.Figuras import Figuras
 
 class LinhaLivre(Figuras):
     def __init__(
@@ -38,7 +38,7 @@ class LinhaLivre(Figuras):
         pass
     
     def desenhar_figura(self):
-        pass
+        return super().desenhar_figura()        
     
     def desenhar_figura_nova(self):
         pass
