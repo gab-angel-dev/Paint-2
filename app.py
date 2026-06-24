@@ -39,6 +39,7 @@ def aplicar_figura(*args):
             canvas=canvas,
             historico_figuras=historico_figuras,
         )
+        
 
         canvas.bind('<ButtonPress-1>', instancia_atual.iniciar_figura)
         canvas.bind('<B1-Motion>', instancia_atual.atualizar_figura)

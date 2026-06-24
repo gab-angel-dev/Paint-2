@@ -36,6 +36,8 @@ class LinhaLivre(Figuras):
 
     def atualizar_figura(self, event):
         self.figura_nova[1].append((event.x, event.y))
+        self.desenhar_figura()
+        self.desenhar_figura_nova()
     
     def incluir_figura(self,event):
         if not self.incompleta(): 
@@ -47,8 +49,8 @@ class LinhaLivre(Figuras):
         return super().desenhar_figura()        
     
     def desenhar_figura_nova(self):
-        values = self.figura_nova[1]
-        canvas.create_line(values, dash=(4, 2))
+        tipo, values, cor_outline, cor_fill = self.figura_nova
+        self.canvas.create_line(values, dash=(4, 2),fill=cor_outline)
     
     def incompleta(self):
         return len(self.figura_nova[1]) <=1
