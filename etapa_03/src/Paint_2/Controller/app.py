@@ -1,9 +1,9 @@
-from etapa_02.poligonos.Linha import Linha
-from etapa_02.poligonos.LinhaLivre import LinhaLivre
-from etapa_02.poligonos.Oval import Oval
-from etapa_02.poligonos.Circulo import Circulo
-from etapa_02.poligonos.Retangulo import Retangulo
-from etapa_02.poligonos.Poligono import Poligono
+from etapa_03.src.Paint_2.Model.Linha import Linha
+from etapa_03.src.Paint_2.Model.LinhaLivre import LinhaLivre
+from etapa_03.src.Paint_2.Model.Oval import Oval
+from etapa_03.src.Paint_2.Model.Circulo import Circulo
+from etapa_03.src.Paint_2.Model.Retangulo import Retangulo
+from etapa_03.src.Paint_2.Model.Poligono import Poligono
 from etapa_02.interface.janela import App
 
 figuras_classes = {
