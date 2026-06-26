@@ -8,8 +8,7 @@ from etapa_03.src.Paint_2.Model.Retangulo import Retangulo
 from etapa_03.src.Paint_2.Model.Poligono import Poligono
 
 from etapa_03.src.Paint_2.Controller.Controller import Controller
-from etapa_03.src.Paint_2.Model.Model import Model
-from etapa_03.src.Paint_2.View.View import App
+
 
 
 figuras_classes = {
@@ -33,7 +32,12 @@ cores = {
 }
 
 def main():
-    ...
+
+    Controller(
+       figuras=figuras_classes,
+       cores=cores
+    )
+    
 
 
 if __name__ == "__main__":
