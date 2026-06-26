@@ -1,10 +1,8 @@
-from etapa_03.src.Paint_2.Model import Figuras
-#from tkinter import *
+from src.Paint_2.Model.Figuras import Figuras
 
-#Todos os comentarios aqui são para a interface
-#fiz para testar
 
-class Linha(Figuras):
+
+class Oval(Figuras):
     def __init__(
         self,
         cor_borda: str = 'black',
@@ -18,20 +16,22 @@ class Linha(Figuras):
             )
 
 
-    def iniciar_figura(self, event):
+    def iniciar_figura(self,event):
         self.inic_x = event.x
         self.inic_y = event.y
 
-        
     def atualizar_figura(self,event):
         self.figura_nova = (
-            "linha",
-            (self.inic_x, self.inic_y, event.x, event.y),
+            'oval',
+            (self.inic_x,
+            self.inic_y,
+            event.x,
+            event.y),
             self.cor_borda,
             self.cor_preenchimento
             )
+      
     
-    def incompleta(self, event):
+    def incompleta(self,event):
         values = self.figura_nova[1]
         return (values[0], values[1]) == (values[2], values[3])
-        

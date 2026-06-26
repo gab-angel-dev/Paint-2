@@ -40,8 +40,6 @@ class App(tk.Tk):
         # Função que constrói a tela
         self.construir_barra_menu()
 
-        self.redesenhar()
-
 
 
 
