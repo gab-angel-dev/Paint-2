@@ -1,4 +1,11 @@
 class Model():
+    """
+    Representa o modelo da aplicação.
+
+    Esta classe é responsável por armazenar e gerenciar o histórico
+    das figuras desenhadas, disponibilizando operações para adicionar,
+    consultar e remover figuras.
+    """
     def __init__(self):
         self.historico_figuras = []
 

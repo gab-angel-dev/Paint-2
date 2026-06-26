@@ -3,6 +3,14 @@ from src.Paint_2.Model.Model import Model
 
 
 class Controller:
+    """
+    Controlador da aplicação.
+
+    Atua como intermediário entre a interface gráfica (View) e o
+    modelo de dados (Model). É responsável por tratar os eventos
+    gerados pelo usuário, criar e atualizar figuras, e solicitar 
+    a utilizaçao da interface.
+    """
     def __init__(
         self,
         figuras: dict,
