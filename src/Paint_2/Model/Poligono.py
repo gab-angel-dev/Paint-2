@@ -1,4 +1,4 @@
-from etapa_03.src.Paint_2.Model import Figuras
+from src.Paint_2.Model.Figuras import Figuras
 import math
 
 class Poligono(Figuras):

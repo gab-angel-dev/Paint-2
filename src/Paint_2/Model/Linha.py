@@ -1,8 +1,4 @@
-from etapa_03.src.Paint_2.Model import Figuras
-#from tkinter import *
-
-#Todos os comentarios aqui são para a interface
-#fiz para testar
+from src.Paint_2.Model.Figuras import Figuras
 
 class Linha(Figuras):
     def __init__(

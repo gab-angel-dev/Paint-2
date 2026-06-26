@@ -1,4 +1,4 @@
-from etapa_03.src.Paint_2.Model import Figuras
+from src.Paint_2.Model.Figuras import Figuras
 
 class LinhaLivre(Figuras):
     def __init__(
@@ -25,5 +25,5 @@ class LinhaLivre(Figuras):
     def atualizar_figura(self, event):
         self.figura_nova[1].append((event.x, event.y))
     
-    def incompleta(self):
+    def incompleta(self, event):
         return len(self.figura_nova[1]) <=1
