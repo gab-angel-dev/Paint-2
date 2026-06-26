@@ -1,36 +1,19 @@
-from etapa_02.poligonos.Figuras import Figuras
+from etapa_03.src.Paint_2.Model import Figuras
 import math
 
 class Poligono(Figuras):
     def __init__(
         self,
-        canvas,
-        historico_figuras,
-        x1: int = 0,
-        y1: int = 0,
-        x2: int = 0,
-        y2: int = 0,
-        nome=None,
         cor_borda: str = 'black',
         cor_preenchimento: str = 'white',
         lados = 3,
     ):
         super().__init__(
-            canvas,
-            historico_figuras,
-            nome,
-            x1,
-            y1,
-            x2,
-            y2,
             cor_borda,
             cor_preenchimento,
             lados
             )
             
-        
-        
-
 
     def calcular_vertices(self, coords):
         x1, y1, x2, y2 = coords
@@ -63,31 +46,6 @@ class Poligono(Figuras):
             self.cor_preenchimento,
         )
 
-        self.desenhar_figura()
-        self.desenhar_figura_nova()
-
-    def incluir_figura(self, event):
-        if not self.incompleta(self.figura_nova):
-            self.historico_figuras.append(self.figura_nova)
-        self.desenhar_figura()
-
-
-    def desenhar_figura(self):
-        return super().desenhar_figura()
-
-    def desenhar_figura_nova(self):
-        # coords = self.figura_nova[1]
-        # vertices = self.calcular_vertices(coords)
-        vertices = self.figura_nova[1]
-        cor_borda = self.figura_nova[2]
-        cor_preenchimento = self.figura_nova[3]
-        self.canvas.create_polygon(
-            vertices,
-            outline=cor_borda,
-            fill=cor_preenchimento,
-            dash=(4, 2),
-            width=2
-        )
 
     def incompleta(self, figura):
         vertices = figura[1]
