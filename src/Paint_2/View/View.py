@@ -2,20 +2,46 @@ import tkinter as tk
 from tkinter import colorchooser
 
 class App(tk.Tk):
+    """
+    Interface gráfica principal da aplicação (View).
+
+    Responsabilidade: construir a janela do programa, gerenciar os elementos
+    visuais (Canvas, botões, menus) e renderizar as figuras geométricas
+    na tela de acordo com os dados fornecidos pelo modelo.
+            
+    atributos:
+        nome(str): título da janela da aplicação
+        barra_superior(tk.Frame): contêiner superior para os botões de controle
+        canvas(tk.Canvas): área de desenho onde as figuras são renderizadas
+        tipo_figura(tk.StringVar): variável que armazena o tipo de forma selecionado
+        cor_borda(tk.StringVar): variável que armazena a cor de borda atual
+        cor_preenchimento(tk.StringVar): variável que armazena a cor de preenchimento atual
+        ferramenta(tk.StringVar): variável que armazena a ferramenta secundária (ex: Borracha)
+        lados(tk.IntVar): variável que armazena a quantidade de lados para polígonos
+    @author Angel
+    @version 1.0
+    """
     def __init__(
             self,
             nome: str = 'Sem Título - Paint 2',
     ):
+        """
+        Inicializa a janela principal do sistema, configurando layout e componentes.
         
+        Define as dimensões da aplicação, a estrutura de grid (linhas e colunas),
+        cria os frames principais (barra de ferramentas e canvas) e invoca a 
+        construção dos componentes do menu.
+                
+        @param nome título padrão exibido na barra superior do sistema (padrão: "Sem Título - Paint 2")
+        """
         super().__init__()
         self.nome = nome
-        # Titulo , tamanho e cor da tela
         self.title(self.nome)
         self.geometry("1920x1080")
         self.configure(bg='gray20')
         
         # Configuração da estrutura da tela
-        self.grid_rowconfigure(index=1 ,weight=1)
+        self.grid_rowconfigure(index=1, weight=1)
         self.grid_columnconfigure(index=0, weight=1)
 
         # Barra superior onde tem os botões e as funcionalidades
@@ -36,16 +62,18 @@ class App(tk.Tk):
         )
         self.canvas.grid(row=1, column=0, sticky='nsew', padx=(100, 20), pady=1)
 
-
-
         # Função que constrói a tela
         self.construir_barra_menu()
 
 
-
-
     def construir_barra_menu(self):
-        # boato de escolher figura
+        """
+        Instancia, estiliza e posiciona todos os componentes da barra de ferramentas superior.
+        
+        Configura os menus suspensos (OptionMenu) para formas e ferramentas, os botões
+        de seleção de cor, o seletor numérico (Spinbox) de lados e os botões de arquivo.
+        """
+        # Botão de escolher figura
         self.tipo_figura = tk.StringVar(self.barra_superior, value="Formas")
         
         self.menu_figura = tk.OptionMenu(
@@ -71,7 +99,7 @@ class App(tk.Tk):
 
         self.menu_figura.pack(side='left')
 
-        # botao de escolher cor de borda
+        # Botão de escolher cor de borda
         self.cor_borda = tk.StringVar(self.barra_superior, value='black')
 
         self.botao_cor_borda = tk.Button(
@@ -92,7 +120,7 @@ class App(tk.Tk):
 
         self.botao_cor_borda.pack(side='left')
 
-        # botao de escolher cor de preenchimento
+        # Botão de escolher cor de preenchimento
         self.cor_preenchimento = tk.StringVar(self.barra_superior, value='white')
 
         self.botao_cor_preenchimento = tk.Button(
@@ -113,7 +141,7 @@ class App(tk.Tk):
 
         self.botao_cor_preenchimento.pack(side='left')
 
-        # botao de ferramenta
+        # Botão de ferramenta
         self.ferramenta = tk.StringVar(self.barra_superior, value='Ferramenta')
 
         self.menu_ferramenta = tk.OptionMenu(
@@ -134,8 +162,7 @@ class App(tk.Tk):
 
         self.menu_ferramenta.pack(side='left')
 
-
-        # botao deescolher lados do poligono
+        # Botão de escolher lados do polígono
         self.lados = tk.IntVar(self.barra_superior, value=3)
 
         self.spinbox_lados = tk.Spinbox(
@@ -152,7 +179,7 @@ class App(tk.Tk):
 
         self.spinbox_lados.pack(side='left')
 
-        # botao de salvar arquivo
+        # Botão de salvar arquivo
         self.botao_salvar = tk.Button(
             self.barra_superior,
             text='Salvar'
@@ -170,7 +197,7 @@ class App(tk.Tk):
 
         self.botao_salvar.pack(side='right')
 
-        # botao de abrir arquivo
+        # Botão de abrir arquivo
         self.botao_abrir = tk.Button(
             self.barra_superior,
             text='Abrir'
@@ -190,12 +217,24 @@ class App(tk.Tk):
 
 
     def escolher_cor_borda(self):
+        """
+        Exibe um seletor gráfico de cores para definir a cor da borda das figuras.
+        
+        Se uma cor válida for escolhida, atualiza a variável correspondente e altera 
+        o fundo do botão para fornecer feedback visual ao usuário.
+        """
         cor = colorchooser.askcolor(title="Escolha a cor da borda")
         if cor[1]:
             self.cor_borda.set(cor[1])
             self.botao_cor_borda.config(bg=cor[1])
 
     def escolher_cor_preenchimento(self):
+        """
+        Exibe um seletor gráfico de cores para definir o preenchimento das figuras.
+        
+        Se uma cor válida for escolhida, atualiza a variável correspondente e altera 
+        o fundo do botão para fornecer feedback visual ao usuário.
+        """
         cor = colorchooser.askcolor(title="Escolha a cor de preenchimento")
         if cor[1]:
             self.cor_preenchimento.set(cor[1])
@@ -203,6 +242,16 @@ class App(tk.Tk):
 
 
     def redesenhar(self, figuras, figura_nova = None):
+        """
+        Limpa a tela e renderiza todo o histórico de figuras e o rascunho atual.
+        
+        Este método reconstrói o Canvas do zero a cada atualização. Ele itera sobre 
+        a lista de figuras consolidadas e, opcionalmente, desenha a figura provisória 
+        que está sendo arrastada em tempo real.
+                
+        @param figuras lista de tuplas contendo todas as figuras salvas no histórico do modelo
+        @param figura_nova tupla que representa o estado atual da figura em desenho (opcional)
+        """
         self.canvas.delete("all")
 
         for fig, values, cor_outline, cor_fill in figuras:
@@ -211,7 +260,7 @@ class App(tk.Tk):
             elif fig == "rabisco":
                 self.canvas.create_line(values, fill=cor_outline, width=2)
             elif fig == 'retangulo':
-                self.canvas.create_rectangle(values, outline=cor_outline, fill=cor_fill ,width=2)
+                self.canvas.create_rectangle(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'oval':
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'circulo':
@@ -222,11 +271,11 @@ class App(tk.Tk):
         if figura_nova:
             fig, values, cor_outline, cor_fill = figura_nova
             if fig == "linha":
-                self.canvas.create_line(values[0], values[1], values[2], values[3],fill=cor_outline, width=2)
+                self.canvas.create_line(values[0], values[1], values[2], values[3], fill=cor_outline, width=2)
             elif fig == "rabisco":
-                self.canvas.create_line(values,fill=cor_outline, width=2)
+                self.canvas.create_line(values, fill=cor_outline, width=2)
             elif fig == 'retangulo':
-                self.canvas.create_rectangle(values, outline=cor_outline, fill=cor_fill ,width=2)
+                self.canvas.create_rectangle(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'oval':
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'circulo':
