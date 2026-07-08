@@ -152,6 +152,42 @@ class App(tk.Tk):
 
         self.spinbox_lados.pack(side='left')
 
+        # botao de salvar arquivo
+        self.botao_salvar = tk.Button(
+            self.barra_superior,
+            text='Salvar'
+        )
+
+        self.botao_salvar.config(
+            bg='gray20',
+            fg='white',
+            activebackground="gray30",
+            activeforeground="white",
+            relief="flat", 
+            bd=0,           
+            highlightthickness=0
+        )
+
+        self.botao_salvar.pack(side='right')
+
+        # botao de abrir arquivo
+        self.botao_abrir = tk.Button(
+            self.barra_superior,
+            text='Abrir'
+        )
+
+        self.botao_abrir.config(
+            bg='gray20',
+            fg='white',
+            activebackground="gray30",
+            activeforeground="white",
+            relief="flat", 
+            bd=0,           
+            highlightthickness=0
+        )
+
+        self.botao_abrir.pack(side='right')
+
 
     def escolher_cor_borda(self):
         cor = colorchooser.askcolor(title="Escolha a cor da borda")

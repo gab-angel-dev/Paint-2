@@ -1,3 +1,5 @@
+from tkinter import filedialog
+
 from src.Paint_2.View.View import App
 from src.Paint_2.Model.Model import Model
 
@@ -32,6 +34,9 @@ class Controller:
         self.view.canvas.bind('<B1-Motion>', self.atualizar)
         self.view.canvas.bind('<ButtonRelease-1>', self.incluir)
 
+        self.view.botao_salvar.config(command=self.salvar)
+        self.view.botao_abrir.config(command=self.abrir)
+
         self.view.tipo_figura.trace('w', self.aplicar_figura)
         self.view.cor_borda.trace('w', self.aplicar_figura)
         self.view.cor_preenchimento.trace('w', self.aplicar_figura)
@@ -54,6 +59,23 @@ class Controller:
         if self.figura_atual:
             if not self.figura_atual.incompleta(self.figura_atual.figura_nova):
                 self.model.adicionar_figura(self.figura_atual.figura_nova)
+            self.view.redesenhar(self.model.get_figuras())
+
+    def salvar(self):
+        caminho = filedialog.asksaveasfilename(
+            defaultextension=".paint",
+            filetypes=[("Arquivo Paint", "*.paint")]
+        )
+        if caminho:
+            self.model.salvar_arquivo(caminho)
+
+    def abrir(self):
+        caminho = filedialog.askopenfilename(
+            defaultextension=".paint",
+            filetypes=[("Arquivo Paint", "*.paint")]
+        )
+        if caminho:
+            self.model.abrir_arquivo(caminho)
             self.view.redesenhar(self.model.get_figuras())
 
     def pegar_figura_atual(self):
