@@ -9,7 +9,6 @@ from src.Paint_2.Model.Poligono import Poligono
 
 from src.Paint_2.Controller.Controller import Controller
 
-#testando 1,2
 
 figuras_classes = {
     "Linha": Linha,
