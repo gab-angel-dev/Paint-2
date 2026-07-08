@@ -186,9 +186,9 @@ class App(tk.Tk):
         if figura_nova:
             fig, values, cor_outline, cor_fill = figura_nova
             if fig == "linha":
-                self.canvas.create_line(values[0], values[1], values[2], values[3])
+                self.canvas.create_line(values[0], values[1], values[2], values[3],fill=cor_outline, width=2)
             elif fig == "rabisco":
-                self.canvas.create_line(values)
+                self.canvas.create_line(values,fill=cor_outline, width=2)
             elif fig == 'retangulo':
                 self.canvas.create_rectangle(values, outline=cor_outline, fill=cor_fill ,width=2)
             elif fig == 'oval':
