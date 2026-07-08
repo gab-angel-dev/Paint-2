@@ -10,6 +10,7 @@ from src.Paint_2.Model.Poligono import Poligono
 from src.Paint_2.Controller.Controller import Controller
 
 
+
 figuras_classes = {
     "Linha": Linha,
     "Rabisco": LinhaLivre,
@@ -19,22 +20,10 @@ figuras_classes = {
     "Poligono": Poligono
 }
 
-cores = {
-    "Preto": 'black',
-    "Branco": 'white',
-    "Amarelo": 'yellow',
-    "Azul": 'blue',
-    "Verde": 'green',
-    "Vermelho": 'red',
-    "Rosa": 'pink',
-    "Cinza": 'gray'
-}
-
 def main():
 
     Controller(
-       figuras=figuras_classes,
-       cores=cores
+       figuras=figuras_classes
     )
     
 

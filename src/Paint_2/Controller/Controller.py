@@ -13,12 +13,10 @@ class Controller:
     """
     def __init__(
         self,
-        figuras: dict,
-        cores: dict
+        figuras: dict
     ):
 
         self.figuras = figuras
-        self.cores = cores
         self.model = Model()      
         self.view = App()
 
@@ -28,7 +26,6 @@ class Controller:
         self.lados = self.view.lados.get()
         self.figura_atual = None
 
-        self.pegar_cor()
         self.pegar_figura_atual()
 
         self.view.canvas.bind('<ButtonPress-1>', self.iniciar)
@@ -59,17 +56,6 @@ class Controller:
                 self.model.adicionar_figura(self.figura_atual.figura_nova)
             self.view.redesenhar(self.model.get_figuras())
 
-    def pegar_cor(self):
-        if self.cor_borda in self.cores:
-            self.cor_borda = self.cores[self.cor_borda]
-        else:
-            self.cor_borda = 'black'
-
-        if self.cor_preenchimento in self.cores:
-            self.cor_preenchimento = self.cores[self.cor_preenchimento]
-        else:
-            self.cor_preenchimento = 'white'
-
     def pegar_figura_atual(self):
         if self.nome_figura_atual in self.figuras:
             self.figura_atual = self.figuras[self.nome_figura_atual](
@@ -84,5 +70,4 @@ class Controller:
         self.nome_figura_atual = self.view.tipo_figura.get()
         self.lados = self.view.lados.get()
         
-        self.pegar_cor()
         self.pegar_figura_atual()

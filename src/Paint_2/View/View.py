@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import colorchooser
 
 class App(tk.Tk):
     def __init__(
@@ -71,22 +72,15 @@ class App(tk.Tk):
         self.menu_figura.pack(side='left')
 
         # botao de escolher cor de borda
-        self.cor_borda = tk.StringVar(self.barra_superior, value='Cor da Borda')
+        self.cor_borda = tk.StringVar(self.barra_superior, value='black')
 
-        self.menu_cor_borda = tk.OptionMenu(
+        self.botao_cor_borda = tk.Button(
             self.barra_superior,
-            self.cor_borda,
-                'Preto',
-                'Branco',
-                'Amarelo',
-                'Azul',
-                'Verde',
-                'Vermelho',
-                'Rosa',
-                'Cinza'
+            text='Cor da Borda',
+            command=self.escolher_cor_borda
         )
 
-        self.menu_cor_borda.config(
+        self.botao_cor_borda.config(
             bg='gray20',
             fg='white',
             activebackground="gray30",
@@ -96,25 +90,18 @@ class App(tk.Tk):
             highlightthickness=0
         )
 
-        self.menu_cor_borda.pack(side='left')
+        self.botao_cor_borda.pack(side='left')
 
         # botao de escolher cor de preenchimento
-        self.cor_preenchimento = tk.StringVar(self.barra_superior, value='Cor Preenchimento')
+        self.cor_preenchimento = tk.StringVar(self.barra_superior, value='white')
 
-        self.menu_cor_preenchimento = tk.OptionMenu(
+        self.botao_cor_preenchimento = tk.Button(
             self.barra_superior,
-            self.cor_preenchimento,
-                'Preto',
-                'Branco',
-                'Amarelo',
-                'Azul',
-                'Verde',
-                'Vermelho',
-                'Rosa',
-                'Cinza'
+            text='Cor Preenchimento',
+            command=self.escolher_cor_preenchimento
         )
 
-        self.menu_cor_preenchimento.config(
+        self.botao_cor_preenchimento.config(
             bg='gray20',
             fg='white',
             activebackground="gray30",
@@ -124,7 +111,7 @@ class App(tk.Tk):
             highlightthickness=0
         )
 
-        self.menu_cor_preenchimento.pack(side='left')
+        self.botao_cor_preenchimento.pack(side='left')
 
         # botao de ferramenta
         self.ferramenta = tk.StringVar(self.barra_superior, value='Ferramenta')
@@ -166,6 +153,19 @@ class App(tk.Tk):
         self.spinbox_lados.pack(side='left')
 
 
+    def escolher_cor_borda(self):
+        cor = colorchooser.askcolor(title="Escolha a cor da borda")
+        if cor[1]:
+            self.cor_borda.set(cor[1])
+            self.botao_cor_borda.config(bg=cor[1])
+
+    def escolher_cor_preenchimento(self):
+        cor = colorchooser.askcolor(title="Escolha a cor de preenchimento")
+        if cor[1]:
+            self.cor_preenchimento.set(cor[1])
+            self.botao_cor_preenchimento.config(bg=cor[1])
+
+
     def redesenhar(self, figuras, figura_nova = None):
         self.canvas.delete("all")
 
@@ -197,4 +197,3 @@ class App(tk.Tk):
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             else:
                 self.canvas.create_polygon(values, outline=cor_outline, fill=cor_fill, dash=(4, 2), width=2)
-        
