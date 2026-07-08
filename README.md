@@ -56,7 +56,7 @@ Abaixo estão descritas as métricas precisas coletadas a partir do mapeamento e
 
 ---
 
-## ▶️ Como Executar o Programa
+## ▶️ Como Executar o Programa:
 
 Antes de gerar ou visualizar a documentação, você pode rodar a aplicação diretamente:
 
