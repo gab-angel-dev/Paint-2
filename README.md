@@ -30,7 +30,7 @@ O **Paint 2** é um software de desenho focado em renderização vetorial em tem
 
 Abaixo estão descritas as métricas precisas coletadas a partir do mapeamento estático da árvore de código-fonte analisada:
 
-* **Quantidade de Classes Documentadas:** `10`
+* **Quantidade de Classes Documentadas:** `13`
   * `Model` (Gerenciador de dados)
   * `App` (Interface Gráfica / View)
   * `Controller` (Mediador de eventos)
@@ -41,8 +41,11 @@ Abaixo estão descritas as métricas precisas coletadas a partir do mapeamento e
   * `Oval` (Especialização concreta)
   * `Circulo` (Especialização concreta com restrição de raio equilátero)
   * `Poligono` (Especialização concreta para polígonos regulares de N lados)
+  * `EstadoDesenho` (Superclasse Abstrata do padrão State)
+  * `EstadoOcioso` (Estado concreto: aguardando início do desenho)
+  * `EstadoDesenhando` (Estado concreto: figura em desenho/arrasto)
 
-* **Quantidade de Métodos Documentados:** `28`
+* **Quantidade de Métodos Documentados:** `37`
 
   * **Model:** `5` métodos (`__init__`, `adicionar_figura`, `get_figuras`, `limpar`, `salvar_arquivo`, `abrir_arquivo`).
 
@@ -54,20 +57,23 @@ Abaixo estão descritas as métricas precisas coletadas a partir do mapeamento e
 
   * **Formas Concretas (Especializações):** `11` métodos no total (distribuídos entre as inicializações, lógicas de arrasto, validações de tamanho zerado e o motor trigonométrico matemático `calcular_vertices` contido na classe `Poligono`).
 
+  * **Estado (Padrão State):** `9` métodos no total (`iniciar`, `atualizar` e `incluir` implementados em cada uma das 3 classes: `EstadoDesenho`, `EstadoOcioso` e `EstadoDesenhando`).
+
+---
+
+## 🧩 Padrões de Projeto Aplicados
+
+* **MVC (Model-View-Controller):** separação entre dados (`Model`), interface (`View`) e fluxo de eventos (`Controller`).
+* **Strategy (implícito):** a hierarquia `Figuras` permite que cada tipo de forma (`Retangulo`, `Oval`, `Circulo`, `Poligono`, ...) implemente sua própria lógica de `iniciar_figura`/`atualizar_figura`, sendo usada de forma intercambiável pelo `Controller`.
+* **State:** o `Controller` delega o tratamento dos eventos de mouse (`iniciar`, `atualizar`, `incluir`) ao objeto `self.estado` atual (`EstadoOcioso` ou `EstadoDesenhando`), eliminando verificações condicionais sobre a fase do desenho e tornando explícitas as transições entre "aguardando clique" e "desenhando".
+
 ---
 
 ## ▶️ Como Executar o Programa
 
-Antes de gerar ou visualizar a documentação, você pode rodar a aplicação diretamente:
+O projeto utiliza apenas bibliotecas padrão do Python (`tkinter`, `pickle`), então não há dependências externas para instalar. Basta rodar a partir da raiz do projeto:
 
 ```zsh
-# Ative o ambiente virtual do projeto
-source venv/bin/activate
-
-# Instale as dependências, se ainda não tiver feito
-pip install -r requirements.txt
-
-# Execute o programa a partir da raiz do projeto
 python -m src.Paint_2.main
 ```
 
