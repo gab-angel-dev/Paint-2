@@ -2,6 +2,7 @@ from tkinter import filedialog
 
 from src.Paint_2.View.View import App
 from src.Paint_2.Model.Model import Model
+from src.Paint_2.Model.Estado.EstadoOcioso import EstadoOcioso
 
 
 class Controller:
@@ -12,6 +13,12 @@ class Controller:
     modelo de dados (Model). É responsável por tratar os eventos
     gerados pelo usuário, criar e atualizar figuras, e solicitar 
     a utilização da interface.
+
+    Delega o tratamento dos eventos de mouse (clique, arrasto e
+    soltura) ao estado atual do ciclo de desenho (``self.estado``),
+    seguindo o padrão de projeto State. Isso evita verificações
+    condicionais espalhadas pelo Controller e torna explícitas as
+    transições entre "aguardando clique" e "desenhando".
     
     atributos:
         figuras(dict): dicionário que mapeia os nomes das figuras às suas respectivas classes
@@ -22,8 +29,10 @@ class Controller:
         nome_figura_atual(str): nome do tipo de figura selecionado (ex: "poligono")
         lados(int): número de lados selecionado para as figuras aplicáveis
         figura_atual(Figuras): instância da figura geométrica que está sendo manipulada
+        estado(EstadoDesenho): estado atual do ciclo de desenho (ocioso ou desenhando)
     @author Angel
-    @version 1.0
+    @version 1.1
+    @see EstadoDesenho
     """
     def __init__(
         self,
@@ -47,6 +56,7 @@ class Controller:
         self.nome_figura_atual = self.view.tipo_figura.get()
         self.lados = self.view.lados.get()
         self.figura_atual = None
+        self.estado = EstadoOcioso()
 
         self.pegar_figura_atual()
 
@@ -70,40 +80,30 @@ class Controller:
 
     def iniciar(self, event):
         """
-        Interpola o evento de clique do mouse para definir o início de uma nova figura.
+        Trata o evento de clique do mouse delegando ao estado atual do
+        ciclo de desenho.
         
         @param event evento de clique do mouse (tkinter.Event) enviado pelo Canvas
         """
-        if self.figura_atual:
-            self.figura_atual.iniciar_figura(event) 
+        self.estado.iniciar(self, event)
     
     def atualizar(self, event):
         """
-        Trata o arrasto do mouse, atualizando a figura corrente e redesenhando a tela.
-        
-        Garante que o histórico anterior e o rascunho em tempo real da figura atual
-        sejam renderizados simultaneamente no Canvas.
+        Trata o arrasto do mouse delegando ao estado atual do ciclo de
+        desenho, que atualiza a figura corrente e redesenha a tela.
         
         @param event evento de movimento do mouse (tkinter.Event) com o botão pressionado
         """
-        if self.figura_atual:
-            self.figura_atual.atualizar_figura(event)
-            figuras = self.model.get_figuras()
-            self.view.redesenhar(figuras, self.figura_atual.figura_nova)
+        self.estado.atualizar(self, event)
     
     def incluir(self, event):
         """
-        Finaliza o desenho da figura ao soltar o clique do mouse.
-        
-        Valida se a figura criada possui dimensões válidas e, se correto, 
-        solicita ao modelo a sua inclusão definitiva no histórico, limpando o Canvas.
+        Trata a soltura do mouse delegando ao estado atual do ciclo de
+        desenho, que finaliza e registra a figura no model se válida.
         
         @param event evento de soltura do botão do mouse (tkinter.Event)
         """
-        if self.figura_atual:
-            if not self.figura_atual.incompleta(self.figura_atual.figura_nova):
-                self.model.adicionar_figura(self.figura_atual.figura_nova)
-            self.view.redesenhar(self.model.get_figuras())
+        self.estado.incluir(self, event)
 
     def salvar(self):
         """

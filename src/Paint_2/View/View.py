@@ -141,6 +141,25 @@ class App(tk.Tk):
 
         self.botao_cor_preenchimento.pack(side='left')
 
+        # Botão de remover preenchimento (deixar vazio/transparente)
+        self.botao_sem_preenchimento = tk.Button(
+            self.barra_superior,
+            text='Sem Preenchimento',
+            command=self.remover_preenchimento
+        )
+
+        self.botao_sem_preenchimento.config(
+            bg='gray20',
+            fg='white',
+            activebackground="gray30",
+            activeforeground="white",
+            relief="flat", 
+            bd=0,           
+            highlightthickness=0
+        )
+
+        self.botao_sem_preenchimento.pack(side='left')
+
         # Botão de ferramenta
         self.ferramenta = tk.StringVar(self.barra_superior, value='Ferramenta')
 
@@ -240,7 +259,10 @@ class App(tk.Tk):
             self.cor_preenchimento.set(cor[1])
             self.botao_cor_preenchimento.config(bg=cor[1])
 
-
+    def remover_preenchimento(self):
+        self.cor_preenchimento.set("")
+        self.botao_cor_preenchimento.config(bg="gray20")
+    
     def redesenhar(self, figuras, figura_nova = None):
         """
         Limpa a tela e renderiza todo o histórico de figuras e o rascunho atual.
