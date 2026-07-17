@@ -47,7 +47,13 @@ class Circulo(Figuras):
             lados
             )
         
-        self.raio = 0 
+        self._raio = 0 
+
+    # raio read-only  
+
+    @property
+    def raio(self):
+        return self._raio
 
 
     def iniciar_figura(self, event):

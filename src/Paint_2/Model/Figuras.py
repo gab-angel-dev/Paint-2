@@ -29,10 +29,30 @@ class Figuras(ABC):
         @param cor_preenchimento cor de preenchimento da figura (padrão: "white")
         @param lados número de lados da figura (padrão: 3)
         """
-        self.cor_borda = cor_borda
-        self.cor_preenchimento = cor_preenchimento
-        self.lados = lados
-        self.figura_nova = None
+        self._cor_borda = cor_borda
+        self._cor_preenchimento = cor_preenchimento
+        self._lados = lados
+        self._figura_nova = None
+
+
+    # Tornar os atributos read-only, somente para leitura não permitindo que seja modficado durante o código aumentando a segurança
+
+    @property
+    def cor_borda(self):
+        return self._cor_borda
+    
+    @property
+    def cor_preenchimento(self):
+        return self._cor_preenchimento
+
+    @property
+    def lados(self):
+        return self._lados
+    
+    @property
+    def figura_nova(self):
+        return self._figura_nova
+    
 
     @abstractmethod
     def iniciar_figura(self, event):
