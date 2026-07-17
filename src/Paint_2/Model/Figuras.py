@@ -49,10 +49,6 @@ class Figuras(ABC):
     def lados(self):
         return self._lados
     
-    @property
-    def figura_nova(self):
-        return self._figura_nova
-    
 
     @abstractmethod
     def iniciar_figura(self, event):

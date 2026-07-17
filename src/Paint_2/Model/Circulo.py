@@ -48,14 +48,7 @@ class Circulo(Figuras):
             )
         
         self._raio = 0 
-
-    # raio read-only  
-
-    @property
-    def raio(self):
-        return self._raio
-
-
+        
     def iniciar_figura(self, event):
         """
         Define o ponto inicial do círculo, a partir do clique do usuário.
