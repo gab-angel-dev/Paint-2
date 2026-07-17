@@ -260,6 +260,16 @@ class App(tk.Tk):
             self.botao_cor_preenchimento.config(bg=cor[1])
 
     def remover_preenchimento(self):
+        """
+        Remove o preenchimento das figuras.
+
+        Define a cor de preenchimento como vazia para que as próximas
+        figuras sejam desenhadas somente com a borda. Também restaura
+        a aparência do botão de seleção de preenchimento.
+
+        @author Jorge
+        @version 1.1
+        """
         self.cor_preenchimento.set("")
         self.botao_cor_preenchimento.config(bg="gray20")
     
