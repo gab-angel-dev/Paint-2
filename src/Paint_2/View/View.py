@@ -161,11 +161,12 @@ class App(tk.Tk):
         self.botao_sem_preenchimento.pack(side='left')
 
         # Botão de ferramenta
-        self.ferramenta = tk.StringVar(self.barra_superior, value='Ferramenta')
+        self.ferramenta = tk.StringVar(self.barra_superior, value='Nenhuma')
 
         self.menu_ferramenta = tk.OptionMenu(
             self.barra_superior,
             self.ferramenta,
+               "Nenhuma",
                "Borracha"
         )
 
@@ -180,6 +181,23 @@ class App(tk.Tk):
         )
 
         self.menu_ferramenta.pack(side='left')
+
+        # Espessura da borracha
+        self.espessura = tk.IntVar(self.barra_superior, value=10)
+
+        self.spinbox_espessura = tk.Spinbox(
+            self.barra_superior,
+            from_=1,
+            to=50,
+            textvariable=self.espessura,
+            width=3,
+            bg='gray20',
+            fg='white',
+            buttonbackground='gray20',
+            relief='flat',
+        )
+
+        self.spinbox_espessura.pack(side='left')
 
         # Botão de escolher lados do polígono
         self.lados = tk.IntVar(self.barra_superior, value=3)
@@ -260,16 +278,6 @@ class App(tk.Tk):
             self.botao_cor_preenchimento.config(bg=cor[1])
 
     def remover_preenchimento(self):
-        """
-        Remove o preenchimento das figuras.
-
-        Define a cor de preenchimento como vazia para que as próximas
-        figuras sejam desenhadas somente com a borda. Também restaura
-        a aparência do botão de seleção de preenchimento.
-
-        @author Jorge
-        @version 1.1
-        """
         self.cor_preenchimento.set("")
         self.botao_cor_preenchimento.config(bg="gray20")
     
@@ -297,6 +305,8 @@ class App(tk.Tk):
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'circulo':
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
+            elif fig == 'borracha':
+                self.canvas.create_line(values, fill=cor_outline, width=cor_fill)
             else:
                 self.canvas.create_polygon(values, outline=cor_outline, fill=cor_fill, dash=(4, 2), width=2)
         
@@ -312,5 +322,7 @@ class App(tk.Tk):
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
             elif fig == 'circulo':
                 self.canvas.create_oval(values, outline=cor_outline, fill=cor_fill, width=2)
+            elif fig == 'borracha':
+                self.canvas.create_line(values, fill=cor_outline, width=cor_fill)
             else:
                 self.canvas.create_polygon(values, outline=cor_outline, fill=cor_fill, dash=(4, 2), width=2)
