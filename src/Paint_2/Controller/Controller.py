@@ -2,6 +2,7 @@ from tkinter import filedialog
 
 from src.Paint_2.View.View import App
 from src.Paint_2.Model.Model import Model
+from src.Paint_2.Model.Borracha import Borracha
 from src.Paint_2.Model.Estado.EstadoOcioso import EstadoOcioso
 
 
@@ -55,6 +56,8 @@ class Controller:
         self.cor_preenchimento = self.view.cor_preenchimento.get()
         self.nome_figura_atual = self.view.tipo_figura.get()
         self.lados = self.view.lados.get()
+        self.nome_ferramenta = self.view.ferramenta.get()
+        self.espessura = self.view.espessura.get()
         self.figura_atual = None
         self.estado = EstadoOcioso()
 
@@ -70,10 +73,12 @@ class Controller:
         self.view.botao_abrir.config(command=self.abrir)
 
         # Rastreadores de estado da interface
-        self.view.tipo_figura.trace('w', self.aplicar_figura)
+        self.view.tipo_figura.trace('w', self.selecionar_figura)
         self.view.cor_borda.trace('w', self.aplicar_figura)
         self.view.cor_preenchimento.trace('w', self.aplicar_figura)
         self.view.lados.trace('w', self.aplicar_figura)
+        self.view.ferramenta.trace('w', self.aplicar_figura)
+        self.view.espessura.trace('w', self.aplicar_figura)
 
         self.view.mainloop()
 
@@ -136,17 +141,36 @@ class Controller:
 
     def pegar_figura_atual(self):
         """
-        Instancia a classe correspondente ao tipo de figura selecionado na interface gráfica.
+        Instancia a classe correspondente à ferramenta/figura selecionada na interface gráfica.
         
-        Cria o objeto passando os atributos de cores e lados atualmente vigentes 
-        para que a figura esteja pronta para receber as coordenadas de desenho.
+        Se a ferramenta "Borracha" estiver selecionada, instancia uma Borracha com a
+        espessura atual. Caso contrário, cria o objeto da forma escolhida passando os
+        atributos de cores e lados atualmente vigentes para que a figura esteja pronta
+        para receber as coordenadas de desenho.
         """
-        if self.nome_figura_atual in self.figuras:
+        if self.nome_ferramenta == "Borracha":
+            self.figura_atual = Borracha(espessura=self.espessura)
+        elif self.nome_figura_atual in self.figuras:
             self.figura_atual = self.figuras[self.nome_figura_atual](
                 cor_borda=self.cor_borda,
                 cor_preenchimento=self.cor_preenchimento,
                 lados=self.lados
             )
+
+    def selecionar_figura(self, *args):
+        """
+        Trata a escolha de uma forma no menu "Formas".
+        
+        Desativa automaticamente qualquer ferramenta especial em uso
+        (ex: Borracha), já que escolher uma forma indica a intenção de
+        voltar a desenhar. Em seguida, delega a atualização geral das
+        propriedades para ``aplicar_figura``.
+                
+        @param args argumentos dinâmicos enviados automaticamente pelo rastreador de variáveis (trace)
+        """
+        if self.view.ferramenta.get() != "Nenhuma":
+            self.view.ferramenta.set("Nenhuma")
+        self.aplicar_figura()
 
     def aplicar_figura(self, *args):
         """
@@ -161,5 +185,7 @@ class Controller:
         self.cor_preenchimento = self.view.cor_preenchimento.get()
         self.nome_figura_atual = self.view.tipo_figura.get()
         self.lados = self.view.lados.get()
+        self.nome_ferramenta = self.view.ferramenta.get()
+        self.espessura = self.view.espessura.get()
         
         self.pegar_figura_atual()
